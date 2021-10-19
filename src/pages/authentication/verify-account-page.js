@@ -13,14 +13,17 @@ import {
 } from "@mui/material";
 import {useState} from "react";
 import {useParams} from "react-router-dom";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {selectAuth} from "../../redux/authentication/auth-reducer";
+import {verifyAccount} from "../../redux/authentication/auth-action-creators";
 
 const VerifyAccountPage = () => {
 
     const [otp, setOTP] = useState("");
     const [error, setError] = useState("");
     const {token} = useParams();
+
+    const dispatch = useDispatch();
 
     const handleSubmit = event => {
         event.preventDefault();
@@ -30,7 +33,7 @@ const VerifyAccountPage = () => {
         } else {
             setError(null);
         }
-        console.log(otp, token);
+        dispatch(verifyAccount(otp, token));
     }
 
     const {authLoading, message} = useSelector(selectAuth);

@@ -1,8 +1,8 @@
 import {AUTH_ACTION_TYPES} from "./auth-action-types";
 
 const INITIAL_STATE = {
-    authLoading: true,
-    message: 'Auth Failed'
+    authLoading: false,
+    message: null
 };
 
 const authReducer = (state = INITIAL_STATE, action) => {

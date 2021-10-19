@@ -12,7 +12,7 @@ import {
     Typography
 } from "@mui/material";
 import {useState} from "react";
-import {useParams} from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {selectAuth} from "../../redux/authentication/auth-reducer";
 import {verifyAccount} from "../../redux/authentication/auth-action-creators";
@@ -24,6 +24,7 @@ const VerifyAccountPage = () => {
     const {token} = useParams();
 
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const handleSubmit = event => {
         event.preventDefault();
@@ -33,7 +34,7 @@ const VerifyAccountPage = () => {
         } else {
             setError(null);
         }
-        dispatch(verifyAccount(otp, token));
+        dispatch(verifyAccount(otp, token, history));
     }
 
     const {authLoading, message} = useSelector(selectAuth);
@@ -76,7 +77,7 @@ const VerifyAccountPage = () => {
                                                 value={otp}
                                                 type='text'
                                                 variant="outlined"
-                                                error={Boolean(otp)}
+                                                error={Boolean(error)}
                                                 label="OTP"
                                                 placeholder="OTP"
                                                 onChange={event => setOTP(event.target.value)}
@@ -84,7 +85,7 @@ const VerifyAccountPage = () => {
                                                 required={true}
                                                 margin="dense"
                                                 size="medium"
-                                                helperText={error.otp}
+                                                helperText={error}
                                             />
 
                                             <Button

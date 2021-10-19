@@ -14,7 +14,7 @@ import {
 import {useState} from "react";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
 import validator from "validator";
-import {useParams} from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {selectAuth} from "../../redux/authentication/auth-reducer";
 import {resetPassword} from "../../redux/authentication/auth-action-creators";
@@ -28,6 +28,7 @@ const ResetPasswordPage = () => {
 
     const {token} = useParams();
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const handleSubmit = event => {
         event.preventDefault();
@@ -60,7 +61,7 @@ const ResetPasswordPage = () => {
         } else {
             setError({error, confirmPassword: null, password: null});
         }
-        dispatch(resetPassword(password, token));
+        dispatch(resetPassword(password, token, history));
     }
 
     const {authLoading, message} = useSelector(selectAuth);
